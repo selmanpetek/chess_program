@@ -1,1 +1,1 @@
-chess_program
+This work is a chess game which is coded in Python 3.
