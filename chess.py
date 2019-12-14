@@ -31,25 +31,25 @@ def king(board, a, b, c, d):
 
 
 def pawn(board, a, b, c, d):
-    is_Pawn = False
+    is_pawn = False
     if c == a + 1 and b == d and board[c][d] == '.':
         board[c][d] = board[a][b]
         board[a][b] = '.'
     elif c == a + 1 and (d == b - 1 or d == b + 1) and board[c][d] != '.':
         board[c][d] = board[a][b]
         board[a][b] = '.'
-        is_Pawn = True
+        is_pawn = True
     elif not c == a + 1 and b == d and board[c][d] == '.':
         print("\nPawn can move only a cell to forward.")
     else:
         print("\nPawn can take only the pieces which is located at cross of the pawn.")
-    if a == 7 and c == 8 and is_Pawn is True:
-        while is_Pawn is True:
+    if a == 7 and c == 8 and is_pawn is True:
+        while is_pawn is True:
             board[c][d] = input("What would you like to choose for your new piece?(R-N-B-Q) : ")
             for i in pieces:
                 if i == board[c][d]:
-                    is_Pawn = False
-            if is_Pawn is True:
+                    is_pawn = False
+            if is_pawn is True:
                 print("Your character has to be one of (R-N-B-Q).")
 
 
@@ -170,70 +170,126 @@ def queen(board, a, b, c, d):
             board[c][d] = board[a][b]
             board[a][b] = '.'
     elif abs(b - d) == abs(a - c):
-        if a < c:
-            a_count = a + 1
-            b_count = b + 1
-            count = abs(a - c)
-            while board[a_count][b_count] == "." and a_count <= c - 1 and b_count <= d - 1:
-                if board[a_count][b_count] != '.':
-                    break
+        if b < d:
+            if a < c:
+                a_count = a + 1
+                b_count = b + 1
+                while board[a_count][b_count] == "." and a_count <= c - 1 and b_count <= d - 1:
+                    if board[a_count][b_count] != '.':
+                        break
+                    else:
+                        a_count += 1
+                        b_count += 1
+                if board[a_count][b_count] == board[c][d]:
+                    board[c][d] = board[a][b]
+                    board[a][b] = '.'
                 else:
-                    a_count += 1
-                    b_count += 1
-            if board[a_count][b_count] == board[c][d]:
-                board[c][d] = board[a][b]
-                board[a][b] = '.'
-            else:
-                print("\nThere is a piece on your way.")
-        elif a > c:
-            a_count = a - 1
-            b_count = b - 1
-            count = abs(a - c)
-            while board[a_count][b_count] == "." and a_count >= c + 1 and b_count >= d + 1:
-                if board[a_count][b_count] != '.':
-                    break
+                    print("\nThere is a piece on your way.")
+            elif a > c:
+                a_count = a - 1
+                b_count = b + 1
+                while board[a_count][b_count] == "." and a_count >= c + 1 and b_count <= d - 1:
+                    if board[a_count][b_count] != '.':
+                        break
+                    else:
+                        a_count -= 1
+                        b_count += 1
+                if board[a_count][b_count] == board[c][d]:
+                    board[c][d] = board[a][b]
+                    board[a][b] = '.'
                 else:
-                    a_count -= 1
-                    b_count -= 1
-            if board[a_count][b_count] == board[c][d]:
-                board[c][d] = board[a][b]
-                board[a][b] = '.'
-            else:
-                print("\nThere is a piece on your way.")
+                    print("\nThere is a piece on your way.")
+        elif b > d:
+            if a < c:
+                a_count = a + 1
+                b_count = b - 1
+                while board[a_count][b_count] == "." and a_count <= c - 1 and b_count >= d + 1:
+                    if board[a_count][b_count] != '.':
+                        break
+                    else:
+                        a_count += 1
+                        b_count -= 1
+                if board[a_count][b_count] == board[c][d]:
+                    board[c][d] = board[a][b]
+                    board[a][b] = '.'
+                else:
+                    print("\nThere is a piece on your way.")
+            elif a > c:
+                a_count = a - 1
+                b_count = b - 1
+                while board[a_count][b_count] == "." and a_count >= c + 1 and b_count >= d + 1:
+                    if board[a_count][b_count] != '.':
+                        break
+                    else:
+                        a_count -= 1
+                        b_count -= 1
+                if board[a_count][b_count] == board[c][d]:
+                    board[c][d] = board[a][b]
+                    board[a][b] = '.'
+                else:
+                    print("\nThere is a piece on your way.")
 
 
 def bishop(board, a, b, c, d):
     if abs(b - d) == abs(a - c):
-        if a < c:
-            a_count = a + 1
-            b_count = b + 1
-            count = abs(a - c)
-            while board[a_count][b_count] == "." and a_count <= c - 1 and b_count <= d - 1:
-                if board[a_count][b_count] != '.':
-                    break
+        if b < d:
+            if a < c:
+                a_count = a + 1
+                b_count = b + 1
+                while board[a_count][b_count] == "." and a_count <= c - 1 and b_count <= d - 1:
+                    if board[a_count][b_count] != '.':
+                        break
+                    else:
+                        a_count += 1
+                        b_count += 1
+                if board[a_count][b_count] == board[c][d]:
+                    board[c][d] = board[a][b]
+                    board[a][b] = '.'
                 else:
-                    a_count += 1
-                    b_count += 1
-            if board[a_count][b_count] == board[c][d]:
-                board[c][d] = board[a][b]
-                board[a][b] = '.'
-            else:
-                print("\nThere is a piece on your way.")
-        elif a > c:
-            a_count = a - 1
-            b_count = b - 1
-            count = abs(a - c)
-            while board[a_count][b_count] == "." and a_count >= c + 1 and b_count >= d + 1:
-                if board[a_count][b_count] != '.':
-                    break
+                    print("\nThere is a piece on your way.")
+            elif a > c:
+                a_count = a - 1
+                b_count = b + 1
+                while board[a_count][b_count] == "." and a_count >= c + 1 and b_count <= d - 1:
+                    if board[a_count][b_count] != '.':
+                        break
+                    else:
+                        a_count -= 1
+                        b_count += 1
+                if board[a_count][b_count] == board[c][d]:
+                    board[c][d] = board[a][b]
+                    board[a][b] = '.'
                 else:
-                    a_count -= 1
-                    b_count -= 1
-            if board[a_count][b_count] == board[c][d]:
-                board[c][d] = board[a][b]
-                board[a][b] = '.'
-            else:
-                print("\nThere is a piece on your way.")
+                    print("\nThere is a piece on your way.")
+        elif b > d:
+            if a < c:
+                a_count = a + 1
+                b_count = b - 1
+                while board[a_count][b_count] == "." and a_count <= c - 1 and b_count >= d + 1:
+                    if board[a_count][b_count] != '.':
+                        break
+                    else:
+                        a_count += 1
+                        b_count -= 1
+                if board[a_count][b_count] == board[c][d]:
+                    board[c][d] = board[a][b]
+                    board[a][b] = '.'
+                else:
+                    print("\nThere is a piece on your way.")
+            elif a > c:
+                a_count = a - 1
+                b_count = b - 1
+                while board[a_count][b_count] == "." and a_count >= c + 1 and b_count >= d + 1:
+                    if board[a_count][b_count] != '.':
+                        break
+                    else:
+                        a_count -= 1
+                        b_count -= 1
+                if board[a_count][b_count] == board[c][d]:
+                    board[c][d] = board[a][b]
+                    board[a][b] = '.'
+                else:
+                    print("\nThere is a piece on your way.")
     else:
         print("\nBishop can move only cross way.")
 
@@ -249,8 +305,6 @@ def move(board, a, b, c, d):
         if a == c and b == d:
             pass
         else:
-            is_r = False
-            is_k = False
             if board[a][b] == 'P':
                 pawn(board, a, b, c, d)
             elif board[a][b] == 'R':
