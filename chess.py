@@ -9,6 +9,13 @@ chess_board = [[' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
                ['8', 'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']]
 column = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 pieces = ['R', 'N', 'B', 'Q']
+
+
+class trick_move:
+    is_rock = False
+    is_king = False
+
+
 for i in chess_board:
     for j in i:
         print(j, end=' ')
@@ -20,10 +27,12 @@ def king(board, a, b, c, d):
     if ((d == b - 1 or d == b + 1) and a == c) or ((c == a - 1 or c == a + 1) and b == d):
         board[c][d] = board[a][b]
         board[a][b] = '.'
+        trick_move.is_king = True
     elif ((d == b - 1 or d == b + 1) and (c == a - 1 or c == a + 1)) or\
             ((c == a - 1 or c == a + 1) and (d == b - 1 or d == b + 1)):
         board[c][d] = board[a][b]
         board[a][b] = '.'
+        trick_move.is_king = True
     elif not ((d == b - 1 or d == b + 1) and a == c) or ((c == a - 1 or c == a + 1) and b == d):
         print("\nKing can move only a cell.")
     else:
@@ -66,10 +75,12 @@ def rock(board, a, b, c, d):
         if count == c:
             board[c][d] = board[a][b]
             board[a][b] = '.'
+            trick_move.is_rock = True
         elif count + 1 == c and (board[c][d] == 'p' or board[c][d] == 'r' or board[c][d] == 'n' or
                                   board[c][d] == 'b' or board[c][d] == 'q' or board[c][d] == 'k'):
             board[c][d] = board[a][b]
             board[a][b] = '.'
+            trick_move.is_rock = True
     elif count2 < d and a == c:
         while board[c][count2 + 1] == '.':
             if count2 >= d:
@@ -78,10 +89,12 @@ def rock(board, a, b, c, d):
         if count2 == d:
             board[c][d] = board[a][b]
             board[a][b] = '.'
+            trick_move.is_rock = True
         elif count2 + 1 == d and (board[c][d] == 'p' or board[c][d] == 'r' or board[c][d] == 'n' or
                                   board[c][d] == 'b' or board[c][d] == 'q' or board[c][d] == 'k'):
             board[c][d] = board[a][b]
             board[a][b] = '.'
+            trick_move.is_rock = True
     elif count > c and b == d:
         while board[count - 1][d] == '.':
             if count <= c:
@@ -90,10 +103,12 @@ def rock(board, a, b, c, d):
         if count == c:
             board[c][d] = board[a][b]
             board[a][b] = '.'
+            trick_move.is_rock = True
         elif count - 1 == c and (board[c][d] == 'p' or board[c][d] == 'r' or board[c][d] == 'n' or
                                   board[c][d] == 'b' or board[c][d] == 'q' or board[c][d] == 'k'):
             board[c][d] = board[a][b]
             board[a][b] = '.'
+            trick_move.is_rock = True
     elif count2 > d and a == c:
         while board[c][count2 - 1] == '.':
             if count2 <= d:
@@ -102,10 +117,12 @@ def rock(board, a, b, c, d):
         if count2 == d:
             board[c][d] = board[a][b]
             board[a][b] = '.'
+            trick_move.is_rock = True
         elif count2 - 1 == d and (board[c][d] == 'p' or board[c][d] == 'r' or board[c][d] == 'n' or
                                   board[c][d] == 'b' or board[c][d] == 'q' or board[c][d] == 'k'):
             board[c][d] = board[a][b]
             board[a][b] = '.'
+            trick_move.is_rock = True
 
 
 def knight(board, a, b, c, d):
@@ -294,13 +311,54 @@ def bishop(board, a, b, c, d):
         print("\nBishop can move only cross way.")
 
 
+def check(board, a, b, c, d):
+    if (board[a][b] == 'R' and board[c][d] == 'K') or (board[a][b] == 'K' and board[c][d] == 'R'):
+        if b == 1 or (b == 5 and  d == 8):
+            count = b + 1
+            while board[a][count] == '.':
+                count += 1
+            if count == d and b == 1:
+                board[1][4] = board[a][b]
+                board[a][b] = '.'
+                board[1][3] = board[c][d]
+                board[c][d] = '.'
+            elif count == d and b == 5:
+                board[1][7] = board[a][b]
+                board[a][b] = '.'
+                board[1][6] = board[c][d]
+                board[c][d] = '.'
+            else:
+                print("\nThere is already a piece between the rock and the king.")
+        elif (b == 5 and d == 1) or b == 8:
+            count = b - 1
+            while board[a][count] == '.':
+                count -= 1
+            if count == d and b == 5:
+                board[1][3] = board[a][b]
+                board[a][b] = '.'
+                board[1][4] = board[c][d]
+                board[c][d] = '.'
+            elif count == d and b == 8:
+                board[1][6] = board[a][b]
+                board[a][b] = '.'
+                board[1][7] = board[c][d]
+                board[c][d] = '.'
+            else:
+                print("\nThere is already a piece between the rock and the king.")
+
+
 def move(board, a, b, c, d):
     if board[a][b] == '.':
         print("\nInvalid move. Try again!")
     elif board[c][d] == "P" or board[c][d] == "N" or board[c][d] == "Q" or\
             board[c][d] == "K" or board[c][d] == "B" or board[c][d] == "R":
-        print("\nThere is already a piece at the cell that you want to play to.")
-        pass
+        if board[c][d] == 'K' or board[c][d] == 'R':
+            if trick_move.is_rock is False and trick_move.is_king is False:
+                check(board, a, b, c, d)
+            else:
+                print("\nYou have already move the king or the rock.")
+        else:
+            print("\nThere is already a piece at the cell that you want to play to.")
     else:
         if a == c and b == d:
             pass
