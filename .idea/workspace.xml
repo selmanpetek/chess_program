@@ -20,6 +20,9 @@
   </component>
   <component name="ProjectId" id="1UjU4SXiVPeD0QMZQM8LXUqvbJ1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../stanford_lagunita_algorithms/merge_sort.py" />
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
